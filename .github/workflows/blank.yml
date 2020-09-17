@@ -12,7 +12,7 @@ jobs:
         with:
           registry-url: https://npm.pkg.github.com
 
-      - run: npm init --scope ${{ github.repository_owner }}
+      - run: npm init --scope ${{ github.repository_owner }} -y
       
       - run: npm publish
         env:
