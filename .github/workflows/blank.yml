@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [:latest, :canary, :$VERSION, :7.7.7, '']
+        version: [':latest', ':canary', ':$VERSION', ':7.7.7', '']
 
     needs: [publish]
 
