@@ -27,7 +27,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: install the package
-        run: |
-          cd ..
+      - name: |
+          rm package.json
           npm i @${{ github.repository }}:${{ env.VERSION }}
