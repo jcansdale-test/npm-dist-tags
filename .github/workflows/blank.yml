@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dist-tag: [latest, canary]
+        version: [latest, canary, '${{ env.VERSION }}', '7.7.7']
 
     needs: [publish]
 
@@ -45,6 +45,6 @@ jobs:
         with:
           registry-url: https://npm.pkg.github.com
 
-      - run: npm i @${{ github.repository }}:${{ matrix.dist-tag }}
+      - run: npm i @${{ github.repository }}:${{ matrix.version }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
