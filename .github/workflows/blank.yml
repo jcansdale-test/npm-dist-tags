@@ -27,6 +27,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: |
+      - run: |
           rm package.json
           npm i @${{ github.repository }}:${{ env.VERSION }}
