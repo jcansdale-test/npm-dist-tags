@@ -1,12 +1,12 @@
 on:
   push:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+env:
+  VERSION: 1.0.0-g${{ github.sha }}
 
-    env:
-      VERSION: 1.0.0-g${{ github.sha }}
+jobs:
+  publish:
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -27,6 +27,18 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: |
-          rm package.json
-          npm i @${{ github.repository }}:${{ env.VERSION }}
+  install:
+    needs: [publish]
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: https://npm.pkg.github.com
+
+      - run: npm i @${{ github.repository }}:${{ env.VERSION }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
