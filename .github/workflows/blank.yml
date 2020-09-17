@@ -29,8 +29,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   install:
+    strategy:
+      fail-fast: false
+      matrix:
+        dist-tag: [latest, canary]
+
     needs: [publish]
-    
+
     runs-on: ubuntu-latest
 
     steps:
@@ -40,6 +45,6 @@ jobs:
         with:
           registry-url: https://npm.pkg.github.com
 
-      - run: npm i @${{ github.repository }}:${{ env.DIST_TAG }}
+      - run: npm i @${{ github.repository }}:${{ matrix.dist-tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
